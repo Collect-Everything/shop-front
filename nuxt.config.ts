@@ -8,41 +8,26 @@ export default defineNuxtConfig({
     },
   },
 
-  css: ['~/assets/css/main.css'],
-
-  modules: [
-    [
-      '@nuxtjs/i18n',
-      {
-        locales: [
-          {
-            code: 'en',
-            name: 'English',
-            file: 'en.json',
-          },
-          {
-            code: 'fr',
-            name: 'Français',
-            file: 'fr.json',
-          },
-        ],
-        defaultLocale: 'fr',
-        lazy: true,
-        langDir: 'locales',
-        strategy: 'no_prefix',
-        detectBrowserLanguage: {
-          useCookie: true,
-          cookieKey: 'i18n_redirected',
-        },
-        vueI18n: './shop-front/i18n.config.ts',
-      },
-    ],
+  css: [
+    '~/assets/css/main.css',
+    '@fortawesome/fontawesome-svg-core/styles.css',
   ],
+
+  modules: ['@pinia/nuxt'],
 
   postcss: {
     plugins: {
       tailwindcss: {},
       autoprefixer: {},
     },
+  },
+
+  build: {
+    transpile: [
+      '@fortawesome/fontawesome-svg-core',
+      '@fortawesome/free-solid-svg-icons',
+      '@fortawesome/free-brands-svg-icons',
+      '@fortawesome/vue-fontawesome',
+    ],
   },
 })
