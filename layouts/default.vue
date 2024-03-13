@@ -2,48 +2,43 @@
   <div class="text-black h-screen w-full">
     <div
       v-if="screenWidth < 768"
-      class="flex items-center justify-between border-b border-gray-300 w-full px-4"
+      class="flex items-center justify-between border-b border-gray-300 w-full p-4"
     >
-      <div class="w-1/3 flex items-center">
+      <fa-icon
+        :icon="['fas', 'bars']"
+        class="text-2xl"
+        @click="showNav = !showNav"
+      />
+    </div>
+    <div
+      v-else
+      class="flex items-center justify-between border-b border-gray-300 w-full px-6 py-4"
+    >
+      <div class="w-1/2 flex items-center justify-center space-x-6">
+        <span class="font-semibold text-neutral-900">{{ shopName }}</span>
+
+        <NuxtLink to="/catalog" class="text-neutral-500">
+          <span>
+            {{ $t('general.catalog') }}
+          </span>
+        </NuxtLink>
+
+        <NuxtLink to="/contact" class="text-neutral-500">
+          <span>{{ $t('general.contact') }}</span>
+        </NuxtLink>
+      </div>
+
+      <div class="w-1/2 flex items-center justify-center space-x-6">
+        <InputSearch v-model:search="search" class="w-1/3" />
+
+        <fa-icon :icon="['far', 'user']" class="text-2xl text-neutral-500" />
         <fa-icon
-          :icon="['fas', 'bars']"
-          class="text-2xl"
-          @click="showNav = !showNav"
+          :icon="['fas', 'bag-shopping']"
+          class="text-2xl text-neutral-500"
         />
       </div>
     </div>
-    <div v-else>
-      <div
-        class="flex items-center justify-between border-b border-gray-300 w-full px-6"
-      >
-        <div class="w-1/2 flex items-center space-x-6">
-          <NuxtLink to="/" class="text-neutral-500">
-            <span>{{ $t('general.home') }}</span>
-          </NuxtLink>
 
-          <NuxtLink to="/prices" class="text-neutral-500">
-            <span>{{ $t('prices.title') }}</span>
-          </NuxtLink>
-
-          <NuxtLink to="/about" class="text-neutral-500">
-            <span>{{ $t('general.about') }}</span>
-          </NuxtLink>
-        </div>
-
-        <div class="w-1/2 flex items-center justify-end space-x-6">
-          <button class="btn-secondary" @click="$router.push('/register')">
-            <span>{{ $t('login.register') }}</span>
-          </button>
-
-          <button
-            class="btn-skeleton-secondary"
-            @click="$router.push('/login')"
-          >
-            <span>{{ $t('login.login') }}</span>
-          </button>
-        </div>
-      </div>
-    </div>
     <div v-if="!showNav" class="py-6">
       <slot />
     </div>
@@ -69,6 +64,8 @@ export default {
     return {
       showNav: false,
       screenWidth: 0,
+      shopName: 'La cagette locale',
+      search: '',
     }
   },
   mounted() {
@@ -77,6 +74,11 @@ export default {
     window.addEventListener('resize', () => {
       this.screenWidth = window.innerWidth
     })
+  },
+  watch: {
+    search() {
+      console.log(this.search)
+    },
   },
 }
 </script>
