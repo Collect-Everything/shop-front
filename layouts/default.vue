@@ -1,7 +1,7 @@
 <template>
   <div class="text-black h-screen w-full">
     <div
-      v-if="screenWidth < 768"
+      v-show="screenWidth < 768"
       class="flex items-center justify-between w-full p-4"
     >
       <div class="space-x-6">
@@ -12,17 +12,23 @@
         />
         <span class="font-semibold text-xl">{{ shopName }}</span>
       </div>
-      <div class="space-x-6">
+      <div class="flex space-x-6">
         <fa-icon :icon="['fas', 'search']" class="text-2xl text-neutral-500" />
-        <fa-icon
-          :icon="['fas', 'bag-shopping']"
-          class="text-2xl text-neutral-500"
-        />
-        <span>{{ numberOfItems }}</span>
+        <div class="relative">
+          <fa-icon
+            :icon="['fas', 'bag-shopping']"
+            class="text-2xl text-neutral-500"
+          />
+          <span
+            class="absolute -bottom-1 -right-1 text-xs rounded-full bg-blue-600 text-white w-[18px] h-[18px] flex items-center justify-center px-1"
+          >
+            {{ numberOfItems > 9 ? '9+' : numberOfItems }}
+          </span>
+        </div>
       </div>
     </div>
     <div
-      v-else
+      v-show="screenWidth >= 768"
       class="flex items-center justify-between border-b border-gray-300 w-full px-6 py-4"
     >
       <div class="w-1/2 flex items-center justify-center space-x-6">
@@ -108,17 +114,15 @@
 </template>
 
 <script lang="ts">
-import { ref, onMounted } from 'vue'
+import { computed } from 'vue'
 import { useStore } from '~/store'
 export default {
   setup() {
     const store = useStore()
-    // const { getProducts } = store
-
-    const numberOfItems = ref(0)
-
-    onMounted(() => {})
-
+    const { getCart } = store
+    const numberOfItems = computed(() =>
+      getCart().products.reduce((acc, p) => acc + p.quantity, 0)
+    )
     return {
       numberOfItems,
     }

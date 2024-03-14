@@ -81,6 +81,9 @@ export const useStore = defineStore({
     getProducts() {
       return this.products
     },
+    getCart() {
+      return this.cart
+    },
     getProductById(id: number) {
       return this.products.find((product) => product.id === id)
     },
