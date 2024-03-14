@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import type { Product, CartProduct, Cart } from '~/types/custom-types'
 
 export const useStore = defineStore({
   id: 'main',
@@ -53,11 +54,11 @@ export const useStore = defineStore({
         images: ['https://source.unsplash.com/1600x900/?apple'],
         stock: 10,
       },
-    ],
+    ] as Array<Product>,
     cart: {
-      products: [],
+      products: [] as Array<CartProduct>,
       total: 0,
-    },
+    } as Cart,
   }),
   actions: {
     setUser(user: any) {
@@ -68,10 +69,10 @@ export const useStore = defineStore({
       const products = await fetch('/api/products').then((res) => res.json())
       this.products = products
     },
-    addToCart(product: any) {
-      if (this.cart.products.find((p) => p.id === product.id))
-        this.cart.products.find((p) => p.id === product.id).quantity +=
-          product.quantity
+    addToCart(product: CartProduct) {
+      const productInCart = this.cart.products.find((p) => p.id === product.id)
+
+      if (productInCart) productInCart.quantity += product.quantity
       else this.cart.products.push(product)
 
       this.cart.total += product.price * product.quantity
@@ -79,12 +80,6 @@ export const useStore = defineStore({
     },
     getProductById(id: number) {
       return this.products.find((product) => product.id === id)
-    },
-  },
-  getters: {
-    getProducts(): Array<any> {
-      // or Array<Product> => define product type
-      return this.products
     },
   },
 })

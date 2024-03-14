@@ -45,7 +45,7 @@
 </template>
 
 <script lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from '~/store'
 
@@ -56,22 +56,17 @@ export default {
 
     const id = Number(router.currentRoute.value.params.id)
     const quantity = ref(1)
-    const product = ref(null)
-
-    const getProductById = (id: number) => {
-      product.value = store.getProductById(id)
-    }
+    const product = ref(store.getProductById(id))
 
     const addToCart = () => {
-      store.addToCart({
-        id,
-        quantity: quantity.value,
-      })
+      if (product.value) {
+        store.addToCart({
+          id,
+          price: product.value.price,
+          quantity: quantity.value,
+        })
+      }
     }
-
-    onMounted(() => {
-      getProductById(id)
-    })
 
     return {
       id,
