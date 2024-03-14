@@ -29,7 +29,7 @@
           <span>{{ shopName }}</span>
         </NuxtLink>
 
-        <NuxtLink to="/catalog" class="text-neutral-500">
+        <NuxtLink to="/products" class="text-neutral-500">
           <span>
             {{ $t('general.catalog') }}
           </span>
@@ -68,7 +68,7 @@
         <span class="text-neutral-900 text-xl">Accueil</span>
       </NuxtLink>
       <NuxtLink
-        to="/catalog"
+        to="/products"
         class="flex items-center justify-center space-x-2"
         @click="showNav = false"
       >

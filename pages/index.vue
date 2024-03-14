@@ -19,7 +19,7 @@
           <button
             :style="`background-color: ${color}`"
             class="btn"
-            @click="$router.push('/catalog')"
+            @click="$router.push('/products')"
           >
             {{ buttonText }}
           </button>
@@ -36,13 +36,13 @@
       </span>
 
       <div class="grid grid-cols-2 gap-4">
-        <CatalogItemCard v-for="item in items" :key="item.id" :product="item" />
+        <ProductItemCard v-for="item in items" :key="item.id" :product="item" />
       </div>
 
       <button
         :style="`background-color: ${color}`"
         class="btn w-fit"
-        @click="$router.push('/catalog')"
+        @click="$router.push('/products')"
       >
         Voir tous les produits
       </button>
@@ -70,44 +70,7 @@ export default {
       buttonText: 'Découvrez notre catalogue',
       backgroundImage: 'https://source.unsplash.com/1600x900/?grocery',
       color: '#3C7E44',
-      items: [
-        {
-          id: 1,
-          name: 'Pommes de terre',
-          price: 2.5,
-          image: 'https://source.unsplash.com/1600x900/?potato',
-        },
-        {
-          id: 2,
-          name: 'Tomates',
-          price: 3.5,
-          image: 'https://source.unsplash.com/1600x900/?tomato',
-        },
-        {
-          id: 3,
-          name: 'Carottes',
-          price: 1.5,
-          image: 'https://source.unsplash.com/1600x900/?carrot',
-        },
-        {
-          id: 4,
-          name: 'Oignons',
-          price: 2,
-          image: 'https://source.unsplash.com/1600x900/?onion',
-        },
-        {
-          id: 5,
-          name: 'Salade',
-          price: 2.5,
-          image: 'https://source.unsplash.com/1600x900/?lettuce',
-        },
-        {
-          id: 6,
-          name: 'Pommes',
-          price: 3,
-          image: 'https://source.unsplash.com/1600x900/?apple',
-        },
-      ],
+      items: [],
       advantages: [
         {
           id: 1,
