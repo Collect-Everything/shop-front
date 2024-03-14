@@ -18,6 +18,7 @@
           :icon="['fas', 'bag-shopping']"
           class="text-2xl text-neutral-500"
         />
+        <span>{{ numberOfItems }}</span>
       </div>
     </div>
     <div
@@ -107,7 +108,21 @@
 </template>
 
 <script lang="ts">
+import { ref, onMounted } from 'vue'
+import { useStore } from '~/store'
 export default {
+  setup() {
+    const store = useStore()
+    // const { getProducts } = store
+
+    const numberOfItems = ref(0)
+
+    onMounted(() => {})
+
+    return {
+      numberOfItems,
+    }
+  },
   data() {
     return {
       showNav: false,

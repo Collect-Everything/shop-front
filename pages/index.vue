@@ -61,7 +61,23 @@
 </template>
 
 <script lang="ts">
+import { ref, onMounted } from 'vue'
+import { useStore } from '~/store'
 export default {
+  setup() {
+    const store = useStore()
+    const { getProducts } = store
+
+    const items = ref([])
+
+    onMounted(() => {
+      items.value = getProducts()
+    })
+
+    return {
+      items,
+    }
+  },
   data() {
     return {
       title: 'Bienvenue chez la cagette locale',
@@ -70,7 +86,6 @@ export default {
       buttonText: 'Découvrez notre catalogue',
       backgroundImage: 'https://source.unsplash.com/1600x900/?grocery',
       color: '#3C7E44',
-      items: [],
       advantages: [
         {
           id: 1,

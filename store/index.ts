@@ -78,6 +78,9 @@ export const useStore = defineStore({
       this.cart.total += product.price * product.quantity
       console.log(this.cart)
     },
+    getProducts() {
+      return this.products
+    },
     getProductById(id: number) {
       return this.products.find((product) => product.id === id)
     },
