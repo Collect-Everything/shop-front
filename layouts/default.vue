@@ -1,7 +1,7 @@
 <template>
   <div class="text-black h-screen w-full">
     <div
-      v-show="screenWidth < 768"
+      v-if="screenWidth < 768"
       class="flex items-center justify-between w-full p-4"
     >
       <div class="space-x-6">
@@ -28,7 +28,7 @@
       </div>
     </div>
     <div
-      v-show="screenWidth >= 768"
+      v-else
       class="flex items-center justify-between border-b border-gray-300 w-full px-6 py-4"
     >
       <div class="w-1/2 flex items-center justify-center space-x-6">
