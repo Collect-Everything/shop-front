@@ -3,7 +3,7 @@
     <ProductCarousel :photos="product ? product.images : []" />
     <div v-if="product" class="flex flex-col px-4 space-y-4">
       <span class="text-xl">{{ product.name }}</span>
-      <span class="text-2xl">{{ product.price }}€</span>
+      <span class="text-2xl">{{ product.price.toFixed(2) }} €</span>
       <div>
         <span class="text-sm">Quantité</span>
         <div class="border flex w-1/3 py-2">
@@ -31,10 +31,8 @@
         <span class="relative flex h-3 w-3">
           <span
             class="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-400 opacity-75"
-          ></span>
-          <span
-            class="relative inline-flex rounded-full h-3 w-3 bg-teal-500"
-          ></span>
+          />
+          <span class="relative inline-flex rounded-full h-3 w-3 bg-teal-500" />
         </span>
         <span class="text-sm">{{ product.stock }} en stock</span>
       </div>
