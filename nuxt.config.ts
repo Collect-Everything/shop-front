@@ -8,6 +8,8 @@ export default defineNuxtConfig({
     },
   },
 
+  ssr: false,
+
   css: [
     '~/assets/css/main.css',
     '@fortawesome/fontawesome-svg-core/styles.css',
@@ -29,5 +31,11 @@ export default defineNuxtConfig({
       '@fortawesome/free-brands-svg-icons',
       '@fortawesome/vue-fontawesome',
     ],
+  },
+
+  runtimeConfig: {
+    public: {
+      API_GATEWAY_URL: process.env.API_GATEWAY_URL,
+    },
   },
 })
