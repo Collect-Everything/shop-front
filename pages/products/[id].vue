@@ -56,13 +56,13 @@ export default {
 
     const id = Number(router.currentRoute.value.params.id)
     const quantity = ref(1)
-    const product = ref(store.getProductById(id))
+    const product = store.getProductById(id)
 
     const addToCart = () => {
-      if (product.value) {
+      if (product) {
         store.addToCart({
           id,
-          price: product.value.price,
+          price: product.price,
           quantity: quantity.value,
         })
       }
