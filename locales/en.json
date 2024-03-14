@@ -1,1 +1,6 @@
-{}
+{
+  "general": {
+    "catalog": "Catalog",
+    "contact": "Contact"
+  }
+}
