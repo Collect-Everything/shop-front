@@ -10,48 +10,54 @@ export const useStore = defineStore({
         name: 'Pommes de terre',
         price: 2.5,
         description: 'Pommes de terre de qualité supérieure',
-        image: 'https://source.unsplash.com/1600x900/?potato',
+        images: ['https://source.unsplash.com/1600x900/?potato'],
+        stock: 10,
       },
       {
         id: 2,
         name: 'Tomates',
         description: 'Pommes de terre de qualité supérieure',
         price: 3.5,
-        image: 'https://source.unsplash.com/1600x900/?tomato',
+        images: ['https://source.unsplash.com/1600x900/?tomato'],
+        stock: 10,
       },
       {
         id: 3,
         name: 'Carottes',
         description: 'Pommes de terre de qualité supérieure',
         price: 1.5,
-        image: 'https://source.unsplash.com/1600x900/?carrot',
+        images: ['https://source.unsplash.com/1600x900/?carrot'],
+        stock: 10,
       },
       {
         id: 4,
         name: 'Oignons',
         description: 'Pommes de terre de qualité supérieure',
         price: 2,
-        image: 'https://source.unsplash.com/1600x900/?onion',
+        images: ['https://source.unsplash.com/1600x900/?onion'],
+        stock: 10,
       },
       {
         id: 5,
         name: 'Salade',
         description: 'Pommes de terre de qualité supérieure',
         price: 2.5,
-        image: 'https://source.unsplash.com/1600x900/?lettuce',
+        images: ['https://source.unsplash.com/1600x900/?lettuce'],
+        stock: 10,
       },
       {
         id: 6,
         name: 'Pommes',
         description: 'Pommes de terre de qualité supérieure',
         price: 3,
-        image: 'https://source.unsplash.com/1600x900/?apple',
+        images: ['https://source.unsplash.com/1600x900/?apple'],
+        stock: 10,
       },
     ],
     cart: {
       products: [],
       total: 0,
-    }
+    },
   }),
   actions: {
     setUser(user: any) {
@@ -64,25 +70,21 @@ export const useStore = defineStore({
     },
     addToCart(product: any) {
       if (this.cart.products.find((p) => p.id === product.id))
-        this.cart.products.find((p) => p.id === product.id).quantity += product.quantity
-      else
-        this.cart.products.push(product)
+        this.cart.products.find((p) => p.id === product.id).quantity +=
+          product.quantity
+      else this.cart.products.push(product)
 
       this.cart.total += product.price * product.quantity
-      console.log(this.cart);
-
+      console.log(this.cart)
     },
     getProductById(id: number) {
       return this.products.find((product) => product.id === id)
-    }
+    },
   },
   getters: {
     getProducts(): Array<any> {
       // or Array<Product> => define product type
       return this.products
     },
-    // getProductById: (state) => (id: number) => {
-    //   return state.products.find((product) => product.id === id)
-    // }
   },
 })
