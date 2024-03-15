@@ -1,6 +1,41 @@
 {
   "general": {
     "catalog": "Catalogue",
-    "contact": "Contact"
+    "contact": "Contact",
+    "or": "Ou",
+    "home": "Accueil"
+  },
+  "login": {
+    "login": "Se connecter",
+    "email": "Email",
+    "password": "Mot de passe",
+    "forgotPassword": "Mot de passe oublié",
+    "oauthLogin": "Connexion avec Google",
+    "noAccount": "Pas encore de compte ?",
+    "register": "S'inscrire",
+    "loginOrRegister": "Connexion / Inscription",
+    "resetPassword": "Réinitialiser le mot de passe",
+    "account": "J'ai déjà un compte !",
+    "passwordPlaceholder": "Au moins 8 caractères",
+    "passwordConfirm": "Confirmer le mot de passe"
+  },
+  "invitations": {
+    "title": "Vérifiez votre boîte mail",
+    "resendEmail": "Renvoyer l'email",
+    "contactSUpport": "Contacter le support",
+    "text1": "Nous venons d'envoyer un email à l'adresse ",
+    "text2": "Veuillez cliquer sur le lien pour vérifier votre adresse email.",
+    "validated": {
+      "title": "Inscription validée",
+      "text1": "Votre adresse email a bien été vérifiée et votre compte est maintenant actif.",
+      "text2": "Vous pouvez vous connecter et commencer à faire vos achats dès maintenant en cliquant sur le bouton ci-dessous !"
+    },
+    "configShop": "Se connecter",
+    "error": {
+      "title": "Problème d'invitation",
+      "text1": "Cette invitation n'existe pas ou a déjà été acceptée.",
+      "text2": "Essayez de vous connecter à votre compte avec le bouton ci-dessous.",
+      "login": "Retour à la connexion"
+    }
   }
 }

@@ -72,7 +72,9 @@
         @click="showNav = false"
       >
         <fa-icon :icon="['fas', 'home']" class="text-neutral-500 text-xl" />
-        <span class="text-neutral-900 text-xl">Accueil</span>
+        <span class="text-neutral-900 text-xl">
+          {{ $t('general.home') }}
+        </span>
       </NuxtLink>
       <NuxtLink
         to="/products"
@@ -96,10 +98,12 @@
           :icon="['fas', 'paper-plane']"
           class="text-neutral-500 text-xl"
         />
-        <span class="text-neutral-900 text-xl"> Contact </span>
+        <span class="text-neutral-900 text-xl">
+          {{ $t('general.contact') }}
+        </span>
       </NuxtLink>
       <NuxtLink
-        to="/contact"
+        to="/login"
         class="flex items-center justify-center space-x-2"
         @click="showNav = false"
       >
@@ -107,7 +111,9 @@
           :icon="['fas', 'arrow-right-to-bracket']"
           class="text-neutral-500 text-xl"
         />
-        <span class="text-neutral-900 text-xl">Connexion / Inscription</span>
+        <span class="text-neutral-900 text-xl">
+          {{ $t('login.loginOrRegister') }}
+        </span>
       </NuxtLink>
     </div>
   </div>
