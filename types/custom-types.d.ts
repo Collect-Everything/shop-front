@@ -10,8 +10,10 @@ export interface Product {
 
 export interface CartProduct {
   id: number
+  name: string
   price: number
   quantity: number
+  image: string
 }
 
 export interface Cart {

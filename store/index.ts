@@ -66,8 +66,8 @@ export const useStore = defineStore({
       localStorage.setItem('user', JSON.stringify(user))
     },
     async fetchProducts() {
-      const products = await fetch('/api/products').then((res) => res.json())
-      this.products = products
+      // const products = await fetch('/api/products').then((res) => res.json())
+      // this.products = products
     },
     addToCart(product: CartProduct) {
       const productInCart = this.cart.products.find((p) => p.id === product.id)
@@ -76,13 +76,33 @@ export const useStore = defineStore({
       else this.cart.products.push(product)
 
       this.cart.total += product.price * product.quantity
-      console.log(this.cart)
+
+      localStorage.setItem('cart', JSON.stringify(this.cart))
+    },
+    updateQuantity(id: number, quantity: Event) {
+      const qty = Number((quantity.target as HTMLInputElement).value)
+
+      const product = this.cart.products.find((p) => p.id === id)
+
+      if (product) {
+        product.quantity = qty
+        this.cart.total += product.price * product.quantity
+
+        localStorage.setItem('cart', JSON.stringify(this.cart))
+      }
+    },
+    removeProduct(id: number) {
+      const product = this.cart.products.find((p) => p.id === id)
+
+      if (product) {
+        this.cart.total -= product.price * product.quantity
+        this.cart.products = this.cart.products.filter((p) => p.id !== id)
+
+        localStorage.setItem('cart', JSON.stringify(this.cart))
+      }
     },
     getProducts(number?: number) {
       return number ? this.products.slice(0, number) : this.products
-    },
-    getCart() {
-      return this.cart
     },
     getProductById(id: number) {
       return this.products.find((product) => product.id === id)

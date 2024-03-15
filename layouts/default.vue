@@ -15,10 +15,12 @@
       <div class="flex space-x-6">
         <fa-icon :icon="['fas', 'search']" class="text-2xl text-neutral-500" />
         <div class="relative">
-          <fa-icon
-            :icon="['fas', 'bag-shopping']"
-            class="text-2xl text-neutral-500"
-          />
+          <NuxtLink to="/cart" class="p-2">
+            <fa-icon
+              :icon="['fas', 'bag-shopping']"
+              class="text-2xl text-neutral-500"
+            />
+          </NuxtLink>
           <span
             class="absolute -bottom-1 -right-1 text-xs rounded-full bg-blue-600 text-white w-[18px] h-[18px] flex items-center justify-center px-1"
           >
@@ -125,9 +127,8 @@ import { useStore } from '~/store'
 export default {
   setup() {
     const store = useStore()
-    const { getCart } = store
     const numberOfItems = computed(() =>
-      getCart().products.reduce((acc, p) => acc + p.quantity, 0)
+      store.cart.products.reduce((acc, p) => acc + p.quantity, 0)
     )
     return {
       numberOfItems,

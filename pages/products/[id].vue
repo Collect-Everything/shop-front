@@ -62,8 +62,10 @@ export default {
       if (product) {
         store.addToCart({
           id,
+          name: product.name,
           price: product.price,
           quantity: quantity.value,
+          image: product.images[0],
         })
       }
     }
