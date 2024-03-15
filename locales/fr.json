@@ -17,7 +17,9 @@
     "resetPassword": "Réinitialiser le mot de passe",
     "account": "J'ai déjà un compte !",
     "passwordPlaceholder": "Au moins 8 caractères",
-    "passwordConfirm": "Confirmer le mot de passe"
+    "passwordConfirm": "Confirmer le mot de passe",
+    "firstName": "Prénom",
+    "differentPasswords": "Les mots de passe ne correspondent pas"
   },
   "invitations": {
     "title": "Vérifiez votre boîte mail",
@@ -37,5 +39,9 @@
       "text2": "Essayez de vous connecter à votre compte avec le bouton ci-dessous.",
       "login": "Retour à la connexion"
     }
+  },
+  "register": {
+    "phone": "Numéro de téléphone",
+    "lastName": "Nom"
   }
 }

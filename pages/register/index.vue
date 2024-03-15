@@ -1,35 +1,32 @@
 <template>
-  <div class="center-component w-full md:lg:w-1/3">
-    <div v-if="!token" class="flex flex-col items-center space-y-6 p-6">
+  <div class="flex justify-center w-full">
+    <div class="flex flex-col items-center w-full lg:xl:w-1/2 space-y-6 px-4">
       <div class="flex flex-col items-center space-y-4 w-full">
-        <span class="text-xl font-bold">{{ $t('login.forgotPassword') }}</span>
+        <span class="text-xl font-bold">{{ $t('login.register') }}</span>
+
+        <div class="flex flex-col space-y-1 text-gray-500 w-full">
+          <label for="lastName">
+            {{ $t('register.lastName') }}
+          </label>
+          <input id="lastName" v-model="lastName" type="text" class="input" />
+        </div>
+
+        <div class="flex flex-col space-y-1 text-gray-500 w-full">
+          <label for="firstName">
+            {{ $t('login.firstName') }}
+          </label>
+          <input id="firstName" v-model="firstName" type="text" class="input" />
+        </div>
+
+        <div class="flex flex-col space-y-1 text-gray-500 w-full">
+          <label for="phone">{{ $t('register.phone') }}</label>
+          <input id="phone" v-model="phone" type="tel" class="input" />
+        </div>
 
         <div class="flex flex-col space-y-1 text-gray-500 w-full">
           <label for="email">{{ $t('login.email') }}</label>
           <input id="email" v-model="email" type="email" class="input" />
         </div>
-      </div>
-
-      <button class="btn-secondary w-full" @click="sendResetEmail()">
-        <fa-icon :icon="['fas', 'rotate']" />
-        <span>{{ $t('login.resetPassword') }}</span>
-      </button>
-
-      <div class="border-b w-full border-gray-300" />
-
-      <div class="flex items-center space-x-1">
-        <span class="text-sm text-gray-500">{{ $t('login.account') }}</span>
-        <span
-          class="text-sm font-semibold cursor-pointer"
-          @click="$router.push('/login')"
-        >
-          {{ $t('login.login') }}
-        </span>
-      </div>
-    </div>
-    <div v-else class="flex flex-col items-center space-y-6 p-6">
-      <div class="flex flex-col items-center space-y-4 w-full">
-        <span class="text-xl font-bold">{{ $t('login.resetPassword') }}</span>
 
         <div class="flex flex-col space-y-1 text-gray-500 w-full">
           <label for="password">{{ $t('login.password') }}</label>
@@ -87,14 +84,20 @@
         </span>
       </div>
 
-      <button
-        class="btn-secondary w-full"
-        :disabled="!passwordEquals || password.length < 8"
-        @click="resetPassword()"
-      >
-        <fa-icon :icon="['fas', 'rotate']" />
-        <span>{{ $t('login.resetPassword') }}</span>
+      <button class="btn-secondary w-full" @click="register">
+        <fa-icon :icon="['fas', 'sign-in-alt']" />
+        <span>{{ $t('login.register') }}</span>
       </button>
+
+      <div class="flex items-center space-x-1">
+        <span class="text-sm text-gray-500">{{ $t('login.account') }}</span>
+        <span
+          class="text-sm font-semibold cursor-pointer text-secondary"
+          @click="$router.push('/login')"
+        >
+          {{ $t('login.login') }}
+        </span>
+      </div>
     </div>
   </div>
 </template>
@@ -103,8 +106,10 @@
 export default {
   data() {
     return {
+      lastName: '',
+      firstName: '',
+      phone: '',
       email: '',
-      token: '',
       password: '',
       passwordConfirm: '',
     }
@@ -114,20 +119,18 @@ export default {
       return this.password === this.passwordConfirm
     },
   },
-  mounted() {
-    this.token = this.$route.query.token
-
-    if (this.token) this.verifyToken()
-  },
   methods: {
-    verifyToken() {
-      // TODO
-    },
-    sendResetEmail() {
-      // TODO
-    },
-    resetPassword() {
-      // TODO
+    async register() {
+      await $fetch('http://localhost:3100/api/v1/users/register', {
+        method: 'POST',
+        body: {
+          lastName: this.lastName,
+          firstName: this.firstName,
+          phone: this.phone,
+          email: this.email,
+          password: this.password,
+        },
+      })
     },
   },
 }

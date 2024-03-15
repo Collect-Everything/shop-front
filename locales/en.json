@@ -17,7 +17,9 @@
     "resetPassword": "Reset password",
     "account": "I already have an account !",
     "passwordConfirm": "Confirm password",
-    "passwordPlaceholder": "At least 8 characters"
+    "passwordPlaceholder": "At least 8 characters",
+    "differentPasswords": "Passwords do not match",
+    "firstName": "First name"
   },
   "invitations": {
     "configShop": "To log in",
@@ -37,5 +39,9 @@
       "text2": "You can log in and start shopping now by clicking the button below!",
       "title": "Registration validated"
     }
+  },
+  "register": {
+    "lastName": "Name",
+    "phone": "Phone number"
   }
 }
