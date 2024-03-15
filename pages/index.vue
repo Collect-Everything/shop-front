@@ -61,7 +61,7 @@
 </template>
 
 <script lang="ts">
-import { useStore } from '~/store/index'
+import { useStore } from '~/store'
 
 export default {
   setup() {
