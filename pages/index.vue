@@ -61,18 +61,14 @@
 </template>
 
 <script lang="ts">
-import { ref, onMounted } from 'vue'
-import { useStore } from '~/store'
+import { useStore } from '~/store/index'
+
 export default {
   setup() {
     const store = useStore()
     const { getProducts } = store
 
-    const items = ref([])
-
-    onMounted(() => {
-      items.value = getProducts()
-    })
+    const items = getProducts(6)
 
     return {
       items,

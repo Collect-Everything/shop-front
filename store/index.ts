@@ -78,8 +78,8 @@ export const useStore = defineStore({
       this.cart.total += product.price * product.quantity
       console.log(this.cart)
     },
-    getProducts() {
-      return this.products
+    getProducts(number?: number) {
+      return number ? this.products.slice(0, number) : this.products
     },
     getCart() {
       return this.cart
