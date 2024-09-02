@@ -10,12 +10,21 @@
           class="text-2xl"
           @click="showNav = !showNav"
         />
-        <span class="font-semibold text-xl">{{ shopName }}</span>
+        <div>
+          <NuxtImg
+            v-if="logo"
+            :src="logo"
+            alt="logo"
+            class="h-10 w-10"
+            crossorigin="anonymous"
+          />
+          <span class="font-semibold text-xl">{{ shopName }}</span>
+        </div>
       </div>
       <div class="flex space-x-6">
         <fa-icon :icon="['fas', 'search']" class="text-2xl text-neutral-500" />
         <div class="relative">
-          <NuxtLink to="/cart" class="p-2">
+          <NuxtLink :to="`/${storeSlug}/cart`" class="p-2">
             <fa-icon
               :icon="['fas', 'bag-shopping']"
               class="text-2xl text-neutral-500"
@@ -31,20 +40,29 @@
     </div>
     <div
       v-else
-      class="flex items-center justify-between border-b border-gray-300 w-full px-6 py-4"
+      class="flex items-center justify-between border-b border-gray-300 w-full px-6 py-4 container mx-auto px-4"
     >
-      <div class="w-1/2 flex items-center justify-center space-x-6">
-        <NuxtLink to="/" class="text-neutral-500">
+      <div class="flex items-center justify-center space-x-6">
+        <NuxtLink
+          :to="`/${storeSlug}`"
+          class="text-neutral-500 flex items-center gap-1 mr-8"
+        >
+          <NuxtImg
+            v-if="logo"
+            :src="logo"
+            alt="logo"
+            class="h-10 w-10 object-contain"
+            crossorigin="anonymous"
+          />
           <span>{{ shopName }}</span>
         </NuxtLink>
-
-        <NuxtLink to="/products" class="text-neutral-500">
+        <NuxtLink :to="`/${storeSlug}/products`" class="text-neutral-500">
           <span>
             {{ $t('general.catalog') }}
           </span>
         </NuxtLink>
 
-        <NuxtLink to="/contact" class="text-neutral-500">
+        <NuxtLink :to="`/${storeSlug}/contact`" class="text-neutral-500">
           <span>{{ $t('general.contact') }}</span>
         </NuxtLink>
       </div>
@@ -53,10 +71,12 @@
         <InputSearch v-model:search="search" class="w-1/3" />
 
         <fa-icon :icon="['far', 'user']" class="text-2xl text-neutral-500" />
-        <fa-icon
-          :icon="['fas', 'bag-shopping']"
-          class="text-2xl text-neutral-500"
-        />
+        <NuxtLink :to="`/${storeSlug}/cart`">
+          <fa-icon
+            :icon="['fas', 'bag-shopping']"
+            class="text-2xl text-neutral-500"
+          />
+        </NuxtLink>
       </div>
     </div>
 
@@ -69,7 +89,7 @@
     >
       <span class="text-2xl font-semibold pb-6">{{ shopName }}</span>
       <NuxtLink
-        to="/"
+        :to="`/${storeSlug}`"
         class="flex items-center justify-center space-x-2"
         @click="showNav = false"
       >
@@ -79,7 +99,7 @@
         </span>
       </NuxtLink>
       <NuxtLink
-        to="/products"
+        :to="`/${storeSlug}/products`"
         class="flex items-center justify-center space-x-2"
         @click="showNav = false"
       >
@@ -92,7 +112,7 @@
         </span>
       </NuxtLink>
       <NuxtLink
-        to="/contact"
+        :to="`/${storeSlug}/contact`"
         class="flex items-center justify-center space-x-2"
         @click="showNav = false"
       >
@@ -105,7 +125,7 @@
         </span>
       </NuxtLink>
       <NuxtLink
-        to="/login"
+        :to="`/${storeSlug}/login`"
         class="flex items-center justify-center space-x-2"
         @click="showNav = false"
       >
@@ -139,11 +159,14 @@ export default {
     }
   },
   data() {
+    const store = useStore()
     return {
       showNav: false,
       screenWidth: 0,
-      shopName: 'La cagette locale',
+      shopName: store.company?.storeName ?? '',
+      storeSlug: store.company?.storeSlug ?? '',
       search: '',
+      logo: store.company?.logo,
     }
   },
   mounted() {

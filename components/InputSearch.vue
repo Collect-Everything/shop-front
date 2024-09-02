@@ -1,6 +1,6 @@
 <template>
-  <div class="input flex items-center w-full space-x-2">
-    <fa-icon :icon="['fas', 'search']" class="text-2xl text-neutral-500" />
+  <div class="border rounded px-4 h-10 flex items-center w-full space-x-2">
+    <fa-icon :icon="['fas', 'search']" class="text-xl text-neutral-400" />
     <input
       type="text"
       :placeholder="$t('general.search')"

@@ -11,6 +11,7 @@
           :src="product.image"
           alt="image"
           class="border border-neutral-200 rounded-md"
+          crossorigin="anonymous"
         />
       </div>
       <p class="font-medium text-xl">{{ product.name }}</p>

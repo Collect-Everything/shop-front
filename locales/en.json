@@ -3,7 +3,8 @@
     "catalog": "Catalog",
     "contact": "Contact",
     "or": "Or",
-    "home": "Welcome"
+    "home": "Welcome",
+    "search": "Search"
   },
   "login": {
     "email": "E-mail",

@@ -1,6 +1,6 @@
 <template>
-  <div class="flex flex-col space-y-4">
-    <div class="flex flex-col p-4 space-y-2">
+  <div class="flex flex-col space-y-4 py-8 sm:py-12">
+    <div class="flex flex-col p-4 space-y-2 container mx-auto px-4">
       <span class="text-2xl title">Mon panier</span>
       <template v-if="cart.products.length === 0">
         <span class="text-neutral-600 text-center">
@@ -50,24 +50,26 @@
         </div>
       </template>
     </div>
-    <div class="bg-neutral-100 flex flex-col p-4 space-y-4">
-      <span class="text-xl">Mon panier</span>
-      <div class="flex flex-col space-y-2">
-        <div class="flex items-center justify-between">
-          <span>Sous-total</span>
-          <span>{{ subTotal.toFixed(2) }} €</span>
+    <div class="bg-neutral-100 flex flex-col p-6">
+      <div class="container mx-auto px-4 space-y-4">
+        <span class="text-xl">Mon panier</span>
+        <div class="flex flex-col space-y-2">
+          <div class="flex items-center justify-between">
+            <span>Sous-total</span>
+            <span>{{ subTotal.toFixed(2) }} €</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span>Frais de transaction</span>
+            <span>{{ fees.toFixed(2) }} €</span>
+          </div>
         </div>
-        <div class="flex items-center justify-between">
-          <span>Frais de transaction</span>
-          <span>{{ fees.toFixed(2) }} €</span>
+        <hr class="bg-neutral-400" />
+        <div class="flex items-center justify-between title">
+          <span>Total (TVA incluse)</span>
+          <span>{{ total.toFixed(2) }} €</span>
         </div>
+        <button class="btn-secondary">Commander</button>
       </div>
-      <hr class="bg-neutral-400" />
-      <div class="flex items-center justify-between title">
-        <span>Total (TVA incluse)</span>
-        <span>{{ total.toFixed(2) }} €</span>
-      </div>
-      <button class="btn-secondary">Commander</button>
     </div>
   </div>
 </template>
