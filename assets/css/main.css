@@ -4,29 +4,74 @@
 
 @font-face {
   font-family: KarlaBold;
-  src: url("assets/font-style/Karla/Karla-Bold.ttf") format("truetype");
+  src: url('assets/font-style/Karla/Karla-Bold.ttf') format('truetype');
 }
 
 @font-face {
   font-family: LatoRegular;
-  src: url("assets/font-style/Lato/Lato-Regular.ttf") format("truetype");
+  src: url('assets/font-style/Lato/Lato-Regular.ttf') format('truetype');
 }
 
 @font-face {
   font-family: LatoBold;
-  src: url("assets/font-style/Lato/Lato-Bold.ttf") format("truetype");
+  src: url('assets/font-style/Lato/Lato-Bold.ttf') format('truetype');
 }
 
 .font-bold {
   font-family: LatoBold, serif;
 }
 
-.title {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: KarlaBold, serif;
 }
 
 html {
   font-family: LatoRegular, serif;
+}
+
+.title-1 {
+  @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl;
+}
+
+.title-2 {
+  @apply text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl;
+}
+
+.title-3 {
+  @apply text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl;
+}
+
+.title-4 {
+  @apply text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl;
+}
+
+.title-5 {
+  @apply text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl;
+}
+
+.title-6 {
+  @apply text-sm lg:text-base xl:text-lg;
+}
+
+.text {
+  @apply text-base;
+}
+
+.text-large {
+  @apply text-base sm:text-lg;
+}
+
+.text-small {
+  @apply text-xs sm:text-sm;
+}
+
+.text-light {
+  @apply text-neutral-500;
 }
 
 .input {
@@ -105,7 +150,7 @@ button:disabled {
 
 .slider:before {
   position: absolute;
-  content: "";
+  content: '';
   height: 16px;
   width: 16px;
   left: 4px;
@@ -118,7 +163,7 @@ input:checked + .slider {
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #0E766E;
+  box-shadow: 0 0 1px #0e766e;
 }
 
 input:checked + .slider:before {

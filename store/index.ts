@@ -1,60 +1,43 @@
 import { defineStore } from 'pinia'
 import type { Product, CartProduct, Cart } from '~/types/custom-types'
 
+export interface CompanyState {
+  storeName: string
+  storeSlug: string
+  color?: string | null
+  logo?: string | null
+  title?: string | null
+  description?: string | null
+  button?: string | null
+  image?: string | null
+  advantages?: { title: string; description: string; icon?: string }[] | null
+  productsType?: string | null
+  phoneContact?: string | null
+  emailContact?: string | null
+  instagramUrl?: string | null
+  twitterUrl?: string | null
+  facebookUrl?: string | null
+  externalUrl?: string | null
+  products: {
+    id: string
+    companyId: string
+    category: { id: string; name: string }
+    name: string
+    price: number
+    description?: string
+    image?: string
+    stock: number
+    conditioning: string
+    unity: string
+    size?: string
+  }[]
+}
+
 export const useStore = defineStore({
   id: 'main',
   state: () => ({
     user: null,
-    products: [
-      {
-        id: 1,
-        name: 'Pommes de terre',
-        price: 2.5,
-        description: 'Pommes de terre de qualité supérieure',
-        images: ['https://source.unsplash.com/1600x900/?potato'],
-        stock: 10,
-      },
-      {
-        id: 2,
-        name: 'Tomates',
-        description: 'Pommes de terre de qualité supérieure',
-        price: 3.5,
-        images: ['https://source.unsplash.com/1600x900/?tomato'],
-        stock: 10,
-      },
-      {
-        id: 3,
-        name: 'Carottes',
-        description: 'Pommes de terre de qualité supérieure',
-        price: 1.5,
-        images: ['https://source.unsplash.com/1600x900/?carrot'],
-        stock: 10,
-      },
-      {
-        id: 4,
-        name: 'Oignons',
-        description: 'Pommes de terre de qualité supérieure',
-        price: 2,
-        images: ['https://source.unsplash.com/1600x900/?onion'],
-        stock: 10,
-      },
-      {
-        id: 5,
-        name: 'Salade',
-        description: 'Pommes de terre de qualité supérieure',
-        price: 2.5,
-        images: ['https://source.unsplash.com/1600x900/?lettuce'],
-        stock: 10,
-      },
-      {
-        id: 6,
-        name: 'Pommes',
-        description: 'Pommes de terre de qualité supérieure',
-        price: 3,
-        images: ['https://source.unsplash.com/1600x900/?apple'],
-        stock: 10,
-      },
-    ] as Array<Product>,
+    company: null as CompanyState | null,
     cart: {
       products: [] as Array<CartProduct>,
       total: 0,
@@ -65,9 +48,22 @@ export const useStore = defineStore({
       this.user = user
       localStorage.setItem('user', JSON.stringify(user))
     },
-    async fetchProducts() {
-      // const products = await fetch('/api/products').then((res) => res.json())
-      // this.products = products
+    async fetchCompanyData(companySlug: string) {
+      const nuxtApp = useNuxtApp()
+      const config = nuxtApp.$config
+      const apiUrl = config.public.API_GATEWAY_URL
+      const response = await fetch(`${apiUrl}/companies/${companySlug}/data`, {
+        method: 'GET',
+      })
+
+      if (!response.ok) {
+        return
+      }
+
+      const data = await response.json()
+
+      console.log('data', data)
+      this.company = data.data
     },
     addToCart(product: CartProduct) {
       const productInCart = this.cart.products.find((p) => p.id === product.id)
@@ -102,10 +98,12 @@ export const useStore = defineStore({
       }
     },
     getProducts(number?: number) {
-      return number ? this.products.slice(0, number) : this.products
+      return number
+        ? this.company?.products.slice(0, number) ?? []
+        : this.company?.products ?? []
     },
-    getProductById(id: number) {
-      return this.products.find((product) => product.id === id)
+    getProductById(id: string) {
+      return this.company?.products.find((product) => product.id === id)
     },
   },
 })

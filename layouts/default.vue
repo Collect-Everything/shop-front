@@ -124,9 +124,13 @@
 <script lang="ts">
 import { computed } from 'vue'
 import { useStore } from '~/store'
+
+const route = useRoute()
+const companyId = computed(() => route.params.slug as string)
 export default {
-  setup() {
+  async setup() {
     const store = useStore()
+    await store.fetchCompanyData(companyId.value)
     const numberOfItems = computed(() =>
       store.cart.products.reduce((acc, p) => acc + p.quantity, 0)
     )
