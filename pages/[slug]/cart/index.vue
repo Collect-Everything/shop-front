@@ -2,7 +2,7 @@
   <div class="flex flex-col space-y-4 py-8 sm:py-12">
     <div class="flex flex-col gap-12 container mx-auto px-4">
       <h1 class="text-2xl title-3">Mon panier</h1>
-      <template v-if="cart.products.length === 0">
+      <template v-if="store.cartProducts.length === 0">
         <span class="text-neutral-600 text-center">
           Votre panier est vide. Ajoutez des produits pour continuer.
         </span>
@@ -10,7 +10,7 @@
       <template v-else>
         <div class="space-y-4">
           <div
-            v-for="(product, index) in products"
+            v-for="(product, index) in store.cartProducts"
             :key="product.id"
             class="flex gap-8"
           >
@@ -28,7 +28,7 @@
                 <span class="text-xl">
                   {{ product.name }}
                 </span>
-                <div @click="removeProduct(product.id)">
+                <div @click="store.removeProduct(product.id)">
                   <fa-icon
                     :icon="['fas', 'trash-alt']"
                     class="text-lg text-neutral-400"
@@ -39,14 +39,14 @@
                 class="w-fit input"
                 :value="product.quantity"
                 @input="
-                  updateQuantity(
+                  store.updateQuantity(
                     product.id,
                     Number(($event.target as HTMLInputElement).value)
                   )
                 "
               >
                 <option
-                  v-for="option in 10"
+                  v-for="option in 100"
                   :key="`option-${option}`"
                   :value="option"
                 >
@@ -65,7 +65,7 @@
         <div class="flex flex-col space-y-2">
           <div class="flex items-center justify-between">
             <span>Sous-total</span>
-            <span>{{ subTotal.toFixed(2) }} €</span>
+            <span>{{ store.subtotal.toFixed(2) }} €</span>
           </div>
           <div class="flex items-center justify-between">
             <span>Frais de transaction</span>
@@ -89,29 +89,18 @@ import { useStore } from '~/store'
 export default {
   setup() {
     const store = useStore()
-    const { cart, getCartProducts, updateQuantity, removeProduct } = store
 
-    const products = getCartProducts()
 
     return {
-      cart,
-      products,
-      updateQuantity,
-      removeProduct,
+      store
     }
   },
   computed: {
-    subTotal() {
-      return this.cart.products.reduce(
-        (acc, product) => acc + product.price * product.quantity,
-        0
-      )
-    },
     fees() {
-      return this.subTotal * 0.2
+      return this.store.subtotal * 0.2
     },
     total() {
-      return this.subTotal + this.fees
+      return this.store.subtotal + this.fees
     },
   },
 }
