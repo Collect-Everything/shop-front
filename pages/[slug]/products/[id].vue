@@ -29,7 +29,12 @@
               </button>
             </div>
           </div>
-          <Button :text="'Ajouter au panier'" :size="'lg'" :class="'w-full'" />
+          <Button
+            :text="'Ajouter au panier'"
+            :size="'lg'"
+            :class="'w-full'"
+            @click="addToCart"
+          />
           <div class="flex items-center gap-1 text-sm text-neutral-400">
             <div class="bg-green-300 w-3 h-3 rounded-full" />
             {{ product.stock }} en stock
@@ -77,8 +82,14 @@ export default defineComponent({
       }
     }
 
+    const addToCart = () => {
+      store.addToCart(id, quantity.value)
+      useNuxtApp().$toast.success('Produit ajouté au panier')
+    }
+
     return {
       ...store.company,
+      addToCart,
       product,
       quantity,
       increaseQuantity,

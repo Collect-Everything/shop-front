@@ -1,6 +1,18 @@
 import { defineStore } from 'pinia'
-import type { Product, CartProduct, Cart } from '~/types/custom-types'
 
+export interface Product {
+  id: string
+  companyId: string
+  category: { id: string; name: string }
+  name: string
+  price: number
+  description?: string
+  image?: string
+  stock: number
+  conditioning: string
+  unity: string
+  size?: string
+}
 export interface CompanyState {
   storeName: string
   storeSlug: string
@@ -18,19 +30,12 @@ export interface CompanyState {
   twitterUrl?: string | null
   facebookUrl?: string | null
   externalUrl?: string | null
-  products: {
-    id: string
-    companyId: string
-    category: { id: string; name: string }
-    name: string
-    price: number
-    description?: string
-    image?: string
-    stock: number
-    conditioning: string
-    unity: string
-    size?: string
-  }[]
+  products: Product[]
+}
+
+export interface Cart {
+  products: Array<{ productId: string; quantity: number; price: number }>
+  total: number
 }
 
 export const useStore = defineStore({
@@ -39,7 +44,7 @@ export const useStore = defineStore({
     user: null,
     company: null as CompanyState | null,
     cart: {
-      products: [] as Array<CartProduct>,
+      products: [],
       total: 0,
     } as Cart,
   }),
@@ -65,34 +70,62 @@ export const useStore = defineStore({
       console.log('data', data)
       this.company = data.data
     },
-    addToCart(product: CartProduct) {
-      const productInCart = this.cart.products.find((p) => p.id === product.id)
+    fetchCart() {
+      const cart = localStorage.getItem('cart')
+      if (cart) this.cart = JSON.parse(cart)
+    },
+    getCartProducts() {
+      return this.cart.products
+        .map((product) => {
+          const productData = this.company?.products.find(
+            (p) => p.id === product.productId
+          )
 
-      if (productInCart) productInCart.quantity += product.quantity
-      else this.cart.products.push(product)
+          if (!productData) return
+          return {
+            ...productData,
+            ...product,
+          }
+        })
+        .filter(Boolean) as (Product & { quantity: number })[]
+    },
+    addToCart(productId: string, quantity = 1) {
+      const product = this.company?.products.find((p) => p.id === productId)
+      if (!product) return
+      const productInCart = this.cart.products.find(
+        (p) => p.productId === product.id
+      )
 
-      this.cart.total += product.price * product.quantity
+      if (productInCart) productInCart.quantity += quantity
+      else
+        this.cart.products.push({
+          productId: product.id,
+          quantity,
+          price: product.price,
+        })
+
+      this.cart.total += product.price * quantity
 
       localStorage.setItem('cart', JSON.stringify(this.cart))
     },
-    updateQuantity(id: number, quantity: Event) {
-      const qty = Number((quantity.target as HTMLInputElement).value)
-
-      const product = this.cart.products.find((p) => p.id === id)
+    updateQuantity(id: string, quantity: number) {
+      const product = this.cart.products.find((p) => p.productId === id)
 
       if (product) {
-        product.quantity = qty
+        product.quantity = quantity
         this.cart.total += product.price * product.quantity
 
         localStorage.setItem('cart', JSON.stringify(this.cart))
       }
     },
-    removeProduct(id: number) {
-      const product = this.cart.products.find((p) => p.id === id)
+    removeProduct(id: string) {
+      const product = this.cart.products.find((p) => p.productId === id)
 
       if (product) {
         this.cart.total -= product.price * product.quantity
-        this.cart.products = this.cart.products.filter((p) => p.id !== id)
+        this.cart.products = this.cart.products.filter(
+          (p) => p.productId !== id
+        )
 
         localStorage.setItem('cart', JSON.stringify(this.cart))
       }

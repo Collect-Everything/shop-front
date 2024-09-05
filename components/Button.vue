@@ -1,7 +1,7 @@
 <template>
   <button
     :class="[
-      'rounded px-5 w-fit flex items-center justify-center text-white font-medium',
+      'rounded px-5 w-fit flex items-center justify-center text-white font-medium transition-all duration-300 hover:scale-[102%] active:scale-[98%]',
       buttonClass,
     ]"
     :style="`background-color: ${color}; height: ${

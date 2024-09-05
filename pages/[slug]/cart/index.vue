@@ -1,25 +1,29 @@
 <template>
   <div class="flex flex-col space-y-4 py-8 sm:py-12">
-    <div class="flex flex-col p-4 space-y-2 container mx-auto px-4">
-      <span class="text-2xl title">Mon panier</span>
+    <div class="flex flex-col gap-12 container mx-auto px-4">
+      <h1 class="text-2xl title-3">Mon panier</h1>
       <template v-if="cart.products.length === 0">
         <span class="text-neutral-600 text-center">
           Votre panier est vide. Ajoutez des produits pour continuer.
         </span>
       </template>
       <template v-else>
-        <div
-          v-for="(product, index) in cart.products"
-          :key="product.id"
-          class="flex space-x-4 items-center"
-        >
-          <img
-            :src="product.image"
-            :alt="index.toString()"
-            class="w-1/2 rounded-md"
-          />
-          <div class="w-1/2">
-            <div class="flex flex-col space-y-4">
+        <div class="space-y-4">
+          <div
+            v-for="(product, index) in products"
+            :key="product.id"
+            class="flex gap-8"
+          >
+            <div class="w-36 h-36 rounded bg-neutral-100 border">
+              <img
+                v-if="product.image"
+                :src="product.image"
+                :alt="index.toString()"
+                class="w-1/2 rounded-md"
+                crossorigin="anonymous"
+              />
+            </div>
+            <div class="flex-1 flex flex-col gap-6">
               <div class="flex items-center justify-between">
                 <span class="text-xl">
                   {{ product.name }}
@@ -34,7 +38,12 @@
               <select
                 class="w-fit input"
                 :value="product.quantity"
-                @input="updateQuantity(product.id, $event)"
+                @input="
+                  updateQuantity(
+                    product.id,
+                    Number(($event.target as HTMLInputElement).value)
+                  )
+                "
               >
                 <option
                   v-for="option in 10"
@@ -44,7 +53,7 @@
                   {{ option }}
                 </option>
               </select>
-              <span class=""> {{ product.price.toFixed(2) }} € </span>
+              <p class="">{{ product.price.toFixed(2) }} €</p>
             </div>
           </div>
         </div>
@@ -68,7 +77,7 @@
           <span>Total (TVA incluse)</span>
           <span>{{ total.toFixed(2) }} €</span>
         </div>
-        <button class="btn-secondary">Commander</button>
+        <Button :text="'Commander'" />
       </div>
     </div>
   </div>
@@ -80,10 +89,13 @@ import { useStore } from '~/store'
 export default {
   setup() {
     const store = useStore()
-    const { cart, updateQuantity, removeProduct } = store
+    const { cart, getCartProducts, updateQuantity, removeProduct } = store
+
+    const products = getCartProducts()
 
     return {
       cart,
+      products,
       updateQuantity,
       removeProduct,
     }

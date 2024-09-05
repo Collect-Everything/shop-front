@@ -71,12 +71,19 @@
         <InputSearch v-model:search="search" class="w-1/3" />
 
         <fa-icon :icon="['far', 'user']" class="text-2xl text-neutral-500" />
-        <NuxtLink :to="`/${storeSlug}/cart`">
-          <fa-icon
-            :icon="['fas', 'bag-shopping']"
-            class="text-2xl text-neutral-500"
-          />
-        </NuxtLink>
+        <div class="relative">
+          <NuxtLink :to="`/${storeSlug}/cart`">
+            <fa-icon
+              :icon="['fas', 'bag-shopping']"
+              class="text-2xl text-neutral-500"
+            />
+            <span
+              class="absolute -bottom-1 -right-1 text-xs rounded-full bg-blue-600 text-white w-[18px] h-[18px] flex items-center justify-center px-1"
+            >
+              {{ numberOfItems > 9 ? '9+' : numberOfItems }}
+            </span>
+          </NuxtLink>
+        </div>
       </div>
     </div>
 
@@ -151,6 +158,7 @@ export default {
   async setup() {
     const store = useStore()
     await store.fetchCompanyData(companyId.value)
+    store.fetchCart()
     const numberOfItems = computed(() =>
       store.cart.products.reduce((acc, p) => acc + p.quantity, 0)
     )
