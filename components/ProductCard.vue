@@ -10,7 +10,7 @@
           v-if="product.image"
           :src="product.image"
           alt="image"
-          class="border border-neutral-200 rounded-md"
+          class="border border-neutral-200 rounded-md w-full h-full object-cover"
           crossorigin="anonymous"
         />
       </div>

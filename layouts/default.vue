@@ -4,30 +4,30 @@
       v-if="screenWidth < 768"
       class="flex items-center justify-between w-full p-4"
     >
-      <div class="space-x-6">
+      <div class="flex gap-3 items-center">
         <fa-icon
           :icon="['fas', 'bars']"
           class="text-2xl"
           @click="showNav = !showNav"
         />
-        <div>
+        <div class="flex gap-1 items-center">
           <NuxtImg
             v-if="logo"
             :src="logo"
             alt="logo"
-            class="h-10 w-10"
+            class="h-8 sm:h-10 w-10 sm:w-10 object-contain"
             crossorigin="anonymous"
           />
-          <span class="font-semibold text-xl">{{ shopName }}</span>
+          <span class="font-semibold text-lg sm:text-xl">{{ shopName }}</span>
         </div>
       </div>
-      <div class="flex space-x-6">
-        <fa-icon :icon="['fas', 'search']" class="text-2xl text-neutral-500" />
+      <div class="flex items-center gap-4">
+        <fa-icon :icon="['fas', 'search']" class="text-xl text-neutral-400" />
         <div class="relative">
           <NuxtLink :to="`/${storeSlug}/cart`" class="p-2">
             <fa-icon
               :icon="['fas', 'bag-shopping']"
-              class="text-2xl text-neutral-500"
+              class="text-xl text-neutral-400"
             />
           </NuxtLink>
           <span

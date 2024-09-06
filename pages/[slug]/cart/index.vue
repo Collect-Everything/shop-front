@@ -19,7 +19,7 @@
                 v-if="product.image"
                 :src="product.image"
                 :alt="index.toString()"
-                class="w-1/2 rounded-md"
+                class="w-full h-full object-cover object-center rounded-md"
                 crossorigin="anonymous"
               />
             </div>

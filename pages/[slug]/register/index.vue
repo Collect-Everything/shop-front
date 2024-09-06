@@ -121,7 +121,7 @@ export default {
   },
   methods: {
     async register() {
-      await $fetch('http://localhost:3100/api/v1/users/register', {
+      await $fetch('http://localhost:3100/api/v1/company-customers/register', {
         method: 'POST',
         body: {
           lastName: this.lastName,

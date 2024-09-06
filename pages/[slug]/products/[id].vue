@@ -1,17 +1,17 @@
 <template>
   <div class="container max-w-[980px] mx-auto py-8 sm:py-12 px-4">
-    <div class="flex gap-8">
+    <div class="flex flex-col sm:flex-row gap-8">
       <div
-        class="w-full h-[400px] sm:h-[600px] border rounded bg-neutral-50 group-hover:scale-[102%] transition-all"
+        class="flex-1 h-[400px] sm:h-[600px] border rounded bg-neutral-50 group-hover:scale-[102%] transition-all"
       >
         <img
           v-if="product.image"
           :src="product.image"
           alt="image"
-          class="border border-neutral-200 rounded-md"
+          class="border border-neutral-200 rounded-md w-full h-full object-cover"
         />
       </div>
-      <div class="w-1/3">
+      <div class="w-full sm:w-2/5">
         <div class="flex flex-col gap-4">
           <h1 class="title-3">{{ product.name }}</h1>
           <p class="text-large">{{ product.price.toFixed(2) }} €</p>
