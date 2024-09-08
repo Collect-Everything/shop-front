@@ -2,7 +2,7 @@
   <div class="text-black h-screen w-full">
     <div
       v-if="screenWidth < 768"
-      class="flex items-center justify-between w-full p-4"
+      class="flex items-center justify-between px-4 h-20 fixed top-0 z-50 inset-x-0 bg-neutral-50"
     >
       <div class="flex gap-3 items-center">
         <fa-icon
@@ -22,7 +22,6 @@
         </div>
       </div>
       <div class="flex items-center gap-4">
-        <fa-icon :icon="['fas', 'search']" class="text-xl text-neutral-400" />
         <div class="relative">
           <NuxtLink :to="`/${storeSlug}/cart`" class="p-2">
             <fa-icon
@@ -40,8 +39,9 @@
     </div>
     <div
       v-else
-      class="flex items-center justify-between border-b border-gray-300 w-full px-6 py-4 container mx-auto px-4"
+      class="fixed top-0 z-50 bg-neutral-50 border-b border-gray-300 w-full h-20 flex items-center"
     >
+    <div class="flex items-center justify-between container px-4 mx-auto">
       <div class="flex items-center justify-center space-x-6">
         <NuxtLink
           :to="`/${storeSlug}`"
@@ -61,16 +61,26 @@
             {{ $t('general.catalog') }}
           </span>
         </NuxtLink>
-
-        <NuxtLink :to="`/${storeSlug}/contact`" class="text-neutral-500">
-          <span>{{ $t('general.contact') }}</span>
-        </NuxtLink>
       </div>
 
-      <div class="w-1/2 flex items-center justify-center space-x-6">
-        <InputSearch v-model:search="search" class="w-1/3" />
+      <div class="flex items-center justify-center space-x-6">
 
+      <NuxtLink
+        v-if="store.user"
+        :to="`/${storeSlug}/login`"
+        class="flex items-center justify-center space-x-2"
+        @click="showNav = false"
+      >
         <fa-icon :icon="['far', 'user']" class="text-2xl text-neutral-500" />
+      </NuxtLink>
+      <NuxtLink
+        v-if="!store.user"
+        :to="`/${storeSlug}/login`"
+        class="flex items-center justify-center space-x-2"
+        @click="showNav = false"
+      >
+          <Button :text="'Se connecter'" :buttonClass="'whitespace-nowrap'" />
+      </NuxtLink>
         <div class="relative">
           <NuxtLink :to="`/${storeSlug}/cart`">
             <fa-icon
@@ -86,8 +96,9 @@
         </div>
       </div>
     </div>
+      </div>
 
-    <div v-if="!showNav">
+    <div v-if="!showNav" class="min-h-[calc(100vh-80px)] py-20">
       <slot />
     </div>
     <div
@@ -119,19 +130,6 @@
         </span>
       </NuxtLink>
       <NuxtLink
-        :to="`/${storeSlug}/contact`"
-        class="flex items-center justify-center space-x-2"
-        @click="showNav = false"
-      >
-        <fa-icon
-          :icon="['fas', 'paper-plane']"
-          class="text-neutral-500 text-xl"
-        />
-        <span class="text-neutral-900 text-xl">
-          {{ $t('general.contact') }}
-        </span>
-      </NuxtLink>
-      <NuxtLink
         :to="`/${storeSlug}/login`"
         class="flex items-center justify-center space-x-2"
         @click="showNav = false"
@@ -145,11 +143,46 @@
         </span>
       </NuxtLink>
     </div>
+    <footer class="bg-neutral-100 py-8" v-if="!showNav">
+      <div class="container px-4 mx-auto flex flex-col sm:flex-row gap-4 sm:gap-16">
+        <div>
+          <NuxtImg
+            v-if="logo"
+            :src="logo"
+            alt="logo"
+            class="h-10 w-10 object-contain"
+            crossorigin="anonymous"
+            />
+          <p>{{store.company?.storeName}}</p>
+          </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2">
+        <div class="flex flex-col gap-2 text-neutral-500">
+          <h3>Navigation</h3>
+          <NuxtLink :to="`/${storeSlug}`">
+            <p>Accueil</p>
+            </NuxtLink>
+          <NuxtLink :to="`/${storeSlug}/products`">
+            <p>Catalogue</p>
+          </NuxtLink>
+        </div>
+        <div class="flex flex-col gap-2 text-neutral-500" v-if="store.company?.emailContact || store.company?.phoneContact || store.company?.instagramUrl || store.company?.twitterUrl || store.company?.facebookUrl || store.company?.externalUrl">
+        <h3>Contact</h3>
+        <p>{{store.company?.emailContact}}</p>
+        <p>{{store.company?.phoneContact}}</p>
+        <p>{{store.company?.instagramUrl}}</p>
+        <p>{{store.company?.twitterUrl}}</p>
+        <p>{{store.company?.facebookUrl}}</p>
+        <p>{{store.company?.externalUrl}}</p>
+        </div>
+        </div>
+      </div>
+    </footer>
   </div>
 </template>
 
 <script lang="ts">
 import { computed } from 'vue'
+import Button from '~/components/Button.vue';
 import { useStore } from '~/store'
 
 const route = useRoute()
@@ -175,6 +208,7 @@ export default {
       storeSlug: store.company?.storeSlug ?? '',
       search: '',
       logo: store.company?.logo,
+      store
     }
   },
   mounted() {

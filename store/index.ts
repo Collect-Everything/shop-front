@@ -14,6 +14,7 @@ export interface Product {
   size?: string
 }
 export interface CompanyState {
+  id: string
   storeName: string
   storeSlug: string
   color?: string | null

@@ -53,7 +53,7 @@
                   {{ option }}
                 </option>
               </select>
-              <p class="">{{ product.price.toFixed(2) }} €</p>
+              <p class="font-bold">{{ product.price.toFixed(2) }} €</p>
             </div>
           </div>
         </div>

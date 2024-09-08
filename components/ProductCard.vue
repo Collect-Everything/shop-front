@@ -20,6 +20,9 @@
         <p class="text-neutral-400">
           {{ PRODUCT_CONDITIONING_LABELS[product.conditioning] }}
         </p>
+        <p v-if="product.conditioning === '500g'" class="text-neutral-400">
+          {{ (product.price * 2).toFixed(2) }} € / 1kg
+        </p>
       </div>
     </div>
   </NuxtLink>

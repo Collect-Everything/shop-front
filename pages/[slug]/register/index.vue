@@ -1,7 +1,7 @@
 <template>
-  <div class="flex justify-center w-full">
-    <div class="flex flex-col items-center w-full lg:xl:w-1/2 space-y-6 px-4">
-      <div class="flex flex-col items-center space-y-4 w-full">
+  <div class="flex justify-center w-full min-h-[calc(100vh-80px)] py-20 items-center">
+    <div class="space-y-4 max-w-lg w-full container mx-auto px-4">
+      <div class="flex flex-col items-center justify-center space-y-4 w-full">
         <span class="text-xl font-bold">{{ $t('login.register') }}</span>
 
         <div class="flex flex-col space-y-1 text-gray-500 w-full">
@@ -16,11 +16,6 @@
             {{ $t('login.firstName') }}
           </label>
           <input id="firstName" v-model="firstName" type="text" class="input" />
-        </div>
-
-        <div class="flex flex-col space-y-1 text-gray-500 w-full">
-          <label for="phone">{{ $t('register.phone') }}</label>
-          <input id="phone" v-model="phone" type="tel" class="input" />
         </div>
 
         <div class="flex flex-col space-y-1 text-gray-500 w-full">
@@ -89,7 +84,7 @@
         <span>{{ $t('login.register') }}</span>
       </button>
 
-      <div class="flex items-center space-x-1">
+      <div class="flex items-center space-x-1 justify-center">
         <span class="text-sm text-gray-500">{{ $t('login.account') }}</span>
         <span
           class="text-sm font-semibold cursor-pointer text-secondary"
@@ -103,12 +98,14 @@
 </template>
 
 <script lang="ts">
+import { useRouter } from 'vue-router'
+import { useStore } from '~/store'
+
 export default {
   data() {
     return {
       lastName: '',
       firstName: '',
-      phone: '',
       email: '',
       password: '',
       passwordConfirm: '',
@@ -121,16 +118,27 @@ export default {
   },
   methods: {
     async register() {
-      await $fetch('http://localhost:3100/api/v1/company-customers/register', {
+      const store = useStore()
+      const router = useRouter()
+      try {
+      await $fetch('http://localhost:3102/api/v1/company-customers/register', {
         method: 'POST',
         body: {
-          lastName: this.lastName,
-          firstName: this.firstName,
-          phone: this.phone,
+          lastname: this.lastName,
+          firstname: this.firstName,
           email: this.email,
           password: this.password,
+          companyId: store.company?.id
         },
       })
+
+      this.$toast.success('Inscription réussie')
+
+      router.push(`/${store.company?.storeSlug}/login`)
+      } catch (e) {
+        this.$toast.error('Une erreur est survenue, veuillez reessayer')
+      }
+
     },
   },
 }
